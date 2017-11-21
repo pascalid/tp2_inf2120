@@ -59,13 +59,20 @@ public class VecteurCreux implements Iterable<Double> {
                     return resultat;
 		}
 	}
+	
+	public      double[]    vecteurCreux;
+    	protected   Maillon     vecteur = null;
+    	protected   Maillon     debut = null;
+    	protected   int         nbElement = 0;
+    	protected   Maillon     tmp = null;
 
 	/**
 	 * Construis un VecteurCreux o� toutes les valeurs sont � 0. 
 	 * @param indiceMax le nombre de valeur dans le vecteur.
 	 */
 	public VecteurCreux( int indiceMax ) { 
-            double [] vecteurCreux = new double [indiceMax];
+        vecteurCreux = new double[indiceMax];
+        nbElement = indiceMax;
 	}
 
 	/**
@@ -75,9 +82,33 @@ public class VecteurCreux implements Iterable<Double> {
 	 * @param vecteurFixe tableau dont les �l�ments sont plac�s dans le vecteur
 	 *        construit.
 	 */
-	public VecteurCreux( double [] vecteurFixe ) { 
-            
-	}
+    public VecteurCreux(double[] vecteurFixe) {
+        vecteurCreux = new double[vecteurFixe.length];
+        for (int j = 0; j < vecteurFixe.length; j++) {
+            vecteurCreux[j] = vecteurFixe[j];
+        }
+        int i = 0;
+        int compteur = 0;
+        Maillon nouveau = null;
+        nbElement = vecteurFixe.length;
+        while (i < vecteurFixe.length && compteur == 0) {
+            if (vecteurFixe[i] != 0) {
+                compteur = compteur + 1;
+                vecteur = new Maillon(vecteurFixe[i], i);
+                if (debut == null) {
+                    debut = vecteur;
+                }
+                for (compteur = 1; compteur < vecteurFixe.length; compteur++) {
+                    nouveau = new Maillon(vecteurFixe[compteur], compteur);
+                    if (vecteurFixe[compteur] != 0) {
+                        vecteur.valeurSuivante = nouveau;
+                        vecteur = nouveau;
+                    }
+                }
+            }
+            i++;
+        }
+    }
 
 	/**
 	 * Addition de 2 vecteurs.
