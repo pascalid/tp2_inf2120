@@ -269,7 +269,20 @@ public class VecteurCreux implements Iterable<Double> {
 	 *         plus grand que taille().
 	 */
 	public void set( int indice, double valeur ) throws IndexOutOfBoundsException {
-
+		if (indice < 1 || indice > vecteurCreux.length) {
+		    throw new IndexOutOfBoundsException();
+		} else {
+		    vecteurCreux[indice] = valeur;
+		    if (valeur == 0) {
+			if (debut == null) {
+			    debut = vecteur;
+			}
+			tmp = debut;
+			while (tmp == null && tmp.indiceDeCase != indice) {
+			    tmp = tmp.valeurSuivante;
+			}
+		    }
+		}
 	}
 
 	/**
