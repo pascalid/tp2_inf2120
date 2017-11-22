@@ -331,7 +331,7 @@ public class VecteurCreux implements Iterable<Double> {
 	 * @return le nombre d'�l�ment du vecteur.
 	 */
 	public int taille() {  
-		return 0;
+		return vecteurCreux.length;
 	}
 
 	/**
