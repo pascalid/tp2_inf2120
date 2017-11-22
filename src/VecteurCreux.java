@@ -129,6 +129,24 @@ public class VecteurCreux implements Iterable<Double> {
     public VecteurCreux addition(VecteurCreux v2) throws IndexOutOfBoundsException {
         return null;
     }
+    
+      /**
+     * Calcule le nombre d'éléments qui ne sont pas à zéro.
+     *
+     * @return Le nombre d'éléments qui ne sont pas à zéro.
+     */
+    public int nbrElementNonZero(){
+
+        int total = 0;
+
+        for (int i = 0 ; i < vecteurCreux.length ; i++) {
+            if (vecteurCreux[i] != 0) {
+                total++;
+            }
+        }
+
+        return total;
+    }
 
     /**
      * Construit un nouveau VecteurCreux parall�le (ou anti-parall�le) � 'this'
