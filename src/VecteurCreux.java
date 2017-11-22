@@ -229,9 +229,13 @@ public class VecteurCreux implements Iterable<Double> {
 	 * @throws IndexOutOfBoundsException lancer si l'indice est plus petit que 1 ou
 	 *         plus grand que taille().
 	 */
-	public double get( int indice ) throws IndexOutOfBoundsException { 
-		return 0.0;
-	}
+	    public double get(int indice) throws IndexOutOfBoundsException {
+		if (indice < 1 || indice > nbElement) {
+		    throw new IndexOutOfBoundsException();
+		}
+		return vecteurCreux[indice - 1];
+	    }
+
 
 	/**
 	 * Construis un it�rateur sur les �l�ments du vecteur, y compris les z�ros.
