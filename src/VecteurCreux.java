@@ -242,7 +242,7 @@ public class VecteurCreux implements Iterable<Double> {
         if (indice < 1 || indice > nbElement) {
             throw new IndexOutOfBoundsException();
         }
-        return vecteurCreux[indice];
+        return vecteurCreux[indice - 1];
     }
 
     /**
