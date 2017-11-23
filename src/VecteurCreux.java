@@ -3,7 +3,10 @@ import java.util.Iterator;
 /**
  *
  * Coulibaly Ibrahim Francis Junior
- *
+ * Code permanent : COUI03069706
+ * Palscal-Ali Ducharme
+ * Code permanent : DUCP01079101
+ * 
  */
 public class VecteurCreux implements Iterable<Double> {
 
@@ -16,11 +19,11 @@ public class VecteurCreux implements Iterable<Double> {
      */
     private class Maillon {
 
-        public Double valeur;
+        public double valeur;
         public int indiceDeCase;
         public Maillon maillonSuivant;
 
-        public Maillon(Double valeur, int indiceDeCase) {
+        public Maillon(double valeur, int indiceDeCase) {
             this.valeur = valeur;
             this.indiceDeCase = indiceDeCase + 1;
             this.maillonSuivant = null;
@@ -37,29 +40,32 @@ public class VecteurCreux implements Iterable<Double> {
      */
     public class IterateurVecteurCreux implements Iterator<Double> {
 
-        Maillon courrant;
-
+        int courrant = 0;
+        Double [] tabIter;
         IterateurVecteurCreux( VecteurCreux v ){ 
-            courrant = v.debut;
+            tabIter = new Double [v.taille()];
+            for (int i = 1; i <= v.taille(); i++) {
+                tabIter[i-1] = v.get(i);
+            }
         }
         
         @Override
         public boolean hasNext() {
-            return null != courrant;
+            return courrant != tabIter.length;
         }
 
         @Override
         public Double next() {
 
-            Double resultat = courrant.valeur;
+            Double resultat = tabIter[courrant];
 
-            courrant = courrant.maillonSuivant;
+            courrant = courrant + 1;
 
             return resultat;
         }
     }
 
-    public      Double[]    vecteurCreux;
+    public      double[]    vecteurCreux;
     protected   Maillon     vecteur = null;
     protected   Maillon     debut = null;
     protected   int         nbElement = 0;
@@ -71,7 +77,7 @@ public class VecteurCreux implements Iterable<Double> {
      * @param indiceMax le nombre de valeur dans le vecteur.
      */
     public VecteurCreux(int indiceMax) {
-        vecteurCreux = new Double [indiceMax];
+        vecteurCreux = new double [indiceMax];
         nbElement = indiceMax;
     }
 
@@ -83,7 +89,7 @@ public class VecteurCreux implements Iterable<Double> {
      * construit.
      */
     public VecteurCreux(double[] vecteurFixe) {
-        vecteurCreux = new Double[vecteurFixe.length];
+        vecteurCreux = new double[vecteurFixe.length];
         
         for (int j = 0; j < vecteurFixe.length; j++) {
             vecteurCreux[j] = vecteurFixe[j];
@@ -92,7 +98,7 @@ public class VecteurCreux implements Iterable<Double> {
         int i = 0;
         int compteur = 0;
         Maillon nouveau = null;
-        nbElement = vecteurCreux.length;
+        nbElement = vecteurFixe.length;
         while (i < vecteurCreux.length && compteur == 0) {
             if (vecteurCreux[i] != 0) {
                 compteur = compteur + 1;
@@ -129,24 +135,6 @@ public class VecteurCreux implements Iterable<Double> {
     public VecteurCreux addition(VecteurCreux v2) throws IndexOutOfBoundsException {
         return null;
     }
-    
-      /**
-     * Calcule le nombre d'éléments qui ne sont pas à zéro.
-     *
-     * @return Le nombre d'éléments qui ne sont pas à zéro.
-     */
-    public int nbrElementNonZero(){
-
-        int total = 0;
-
-        for (int i = 0 ; i < vecteurCreux.length ; i++) {
-            if (vecteurCreux[i] != 0) {
-                total++;
-            }
-        }
-
-        return total;
-    }
 
     /**
      * Construit un nouveau VecteurCreux parall�le (ou anti-parall�le) � 'this'
@@ -160,6 +148,20 @@ public class VecteurCreux implements Iterable<Double> {
      * @return Un vecteur parall�le (ou anti-parall�le) au vecteur 'this' o�
      * chaque valeur a �t� multiplie par 's'.
      */
+    
+    public int nbrElementNonZero(){
+
+        int total = 0;
+
+        for (int i = 0 ; i < vecteurCreux.length ; i++) {
+            if (vecteurCreux[i] != 0) {
+                total++;
+            }
+        }
+
+        return total;
+    }
+    
     public VecteurCreux agrandir(double s) {
         return null;
     }
@@ -174,8 +176,22 @@ public class VecteurCreux implements Iterable<Double> {
      * s'ils n'ont pas la m�me taille ou s'ils n'ont pas les m�mes �l�ments ou
      * si 'objet' est null ou n'est pas un VecteurCreux.
      */
+    @Override
     public boolean equals(Object objet) {
-        return false;
+        boolean egaux = false;
+        if(objet instanceof VecteurCreux && objet != null){
+            VecteurCreux vTemp = (VecteurCreux) objet;
+            if (this.taille()== vTemp.taille()) {
+                egaux = true;
+                for (int i = 1; i <= vecteurCreux.length; i++){
+                    if (this.get(i) != vTemp.get(i)){
+                        egaux = false;
+                    }
+                }
+            }
+        }
+        
+        return egaux;
     }
 
     /**
@@ -209,7 +225,18 @@ public class VecteurCreux implements Iterable<Double> {
      * est diff�rent.
      */
     public boolean estOpposeA(VecteurCreux v2) throws IndexOutOfBoundsException {
-        return false;
+        boolean oppose = false;
+            if (this.taille() != v2.taille()){
+                throw new IndexOutOfBoundsException();
+            } else {
+                oppose = true;
+                for (int i = 1; i <= taille(); i++){
+                    if ( this.get(i) != -(v2.get(i))){
+                        oppose = false;
+                    }
+                }
+            }
+        return oppose;
     }
 
     /**
@@ -242,7 +269,7 @@ public class VecteurCreux implements Iterable<Double> {
         if (indice < 1 || indice > nbElement) {
             throw new IndexOutOfBoundsException();
         }
-        return vecteurCreux[indice - 1];
+        return vecteurCreux[indice-1];
     }
 
     /**
@@ -270,7 +297,17 @@ public class VecteurCreux implements Iterable<Double> {
      * est diff�rent.
      */
     public double multiplicationScalaire(VecteurCreux v2) throws IndexOutOfBoundsException {
-        return 0.0;
+        double scalaire = 0;
+            if (this.taille() != v2.taille()){
+                throw new IndexOutOfBoundsException();
+            } else {
+                for (int i = 1; i <= taille(); i++){
+                    if ( this.get(i) != 0 && v2.get(i) != 0){
+                        scalaire = scalaire + (this.get(i)*v2.get(i));
+                    }
+                }
+            }
+        return scalaire;
     }
 
     /**
@@ -282,7 +319,13 @@ public class VecteurCreux implements Iterable<Double> {
      * @return la norme du vecteur.
      */
     public double normeEucledienne() {
-        return 0.0;
+        double r = 0;
+            for(int i = 1; i <= this.taille(); ++i){
+                if(this.get(i) != 0){
+                    r = r + Math.pow(this.get(i), 2);
+                }
+            }
+        return Math.sqrt(r);
     }
 
     /**
@@ -295,7 +338,17 @@ public class VecteurCreux implements Iterable<Double> {
      * @return Un nouveau VecteurCreux oppos� au vecteur 'this'.
      */
     public VecteurCreux oppose() {
-        return null;
+        VecteurCreux vecteurOppose = new VecteurCreux (this.taille());
+        double r = 0;
+        for(int i = 1; i <= this.taille(); i++){
+            if(this.get(i) != 0){
+                r = -1 * this.get(i);
+                vecteurOppose.set(i, r);
+            } else {
+                vecteurOppose.set(i, 0);
+            }
+        }
+        return vecteurOppose;
     }
 
     /**
@@ -388,6 +441,17 @@ public class VecteurCreux implements Iterable<Double> {
      * @return le vecteur unitaire parall�le � 'this'.
      */
     public VecteurCreux unitaire() {
-        return null;
+        VecteurCreux vecteurUnitaire  = new VecteurCreux (this.taille());
+        double n = this.normeEucledienne();
+        double r = 0;
+        for(int i = 1; i <= this.taille(); i++){
+            if(this.get(i) != 0){
+                r = this.get(i) / n;
+                vecteurUnitaire.set(i, r);
+            } else {
+                vecteurUnitaire.set(i, 0);
+            }
+        }
+        return vecteurUnitaire;
     }
 }
