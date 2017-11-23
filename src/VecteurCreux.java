@@ -133,9 +133,31 @@ public class VecteurCreux implements Iterable<Double> {
      * est diff�rent.
      */
     public VecteurCreux addition(VecteurCreux v2) throws IndexOutOfBoundsException {
-        return null;
-    }
 
+        VecteurCreux v3;
+        double indexV3 [];
+        double total = 0;
+
+        if (this.taille() != v2.taille()){
+
+            throw new IndexOutOfBoundsException() ;
+
+        }else {
+
+            indexV3 = new double[this.taille()];
+            v3 = new VecteurCreux(indexV3);
+
+            for (int i = 0 ; i < this.taille() ; i++){
+
+                total = this.get(i + 1) + v2.get(i + 1);
+                v3.set(i+1 , total);
+                total = 0;
+            }
+
+        }
+        return v3;
+
+    }
     /**
      * Construit un nouveau VecteurCreux parall�le (ou anti-parall�le) � 'this'
      * avec une norme multipli�e par 's'.
@@ -148,6 +170,23 @@ public class VecteurCreux implements Iterable<Double> {
      * @return Un vecteur parall�le (ou anti-parall�le) au vecteur 'this' o�
      * chaque valeur a �t� multiplie par 's'.
      */
+     public VecteurCreux agrandir(double s) {
+
+        double resultat = 0;
+        int taille = this.taille();
+        VecteurCreux v3 = new VecteurCreux(taille);
+
+        for (int i = 0 ; i < taille ; i++){
+
+            resultat = this.get(i + 1) * s ;
+            v3.set(i + 1 , resultat);
+
+        }
+
+        return v3;
+
+
+    }
     
     public int nbrElementNonZero(){
 
@@ -162,9 +201,7 @@ public class VecteurCreux implements Iterable<Double> {
         return total;
     }
     
-    public VecteurCreux agrandir(double s) {
-        return null;
-    }
+
 
     /**
      * Compare deux vecteurs : 'this' et 'objet'.
@@ -417,7 +454,30 @@ public class VecteurCreux implements Iterable<Double> {
      * est diff�rent.
      */
     public VecteurCreux soustraction(VecteurCreux v2) throws IndexOutOfBoundsException {
-        return null;
+
+        VecteurCreux v3;
+        double indexV3 [];
+        double total = 0;
+
+        if (this.taille() != v2.taille()){
+
+            throw new IndexOutOfBoundsException() ;
+
+        }else {
+
+            indexV3 = new double[this.taille()];
+            v3 = new VecteurCreux(indexV3);
+
+            for (int i = 0 ; i < this.taille() ; i++){
+
+                total = this.get(i + 1) - v2.get(i + 1);
+                v3.set(i+1 , total);
+                total = 0;
+            }
+
+        }
+        return v3;
+
     }
 
     /**
