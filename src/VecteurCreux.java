@@ -187,7 +187,7 @@ public class VecteurCreux implements Iterable<Double> {
 
 
     }
-    
+     
     /**
      * donne le nombre d'éléments qui ne sont pas égal a zero
      *
@@ -205,8 +205,6 @@ public class VecteurCreux implements Iterable<Double> {
 
         return total;
     }
-    
-
 
     /**
      * Compare deux vecteurs : 'this' et 'objet'.
@@ -250,7 +248,37 @@ public class VecteurCreux implements Iterable<Double> {
      * est diff�rent.
      */
     public boolean estAntiParallelA(VecteurCreux v2) throws IndexOutOfBoundsException {
-        return false;
+        double resultat = 0;
+        boolean validation = false;
+        double divVecteur2 = 0;
+
+        if (this.taille() != v2.taille()){
+            
+           throw new IndexOutOfBoundsException();
+           
+        }else {
+            validation = true;
+            for (int i = 1 ; i <= this.taille() ; i++){
+
+                 if ( this.get(i) != 0 && v2.get(i) != 0 ) {
+                     divVecteur2 = this.get(i) / v2.get(i);
+                     if (resultat == 0) {
+                         resultat = divVecteur2;
+                     } else {
+                         if (divVecteur2 != resultat){
+                             validation = false;
+                         }
+                     }
+                 }
+                 if (this.get(i) == 0 && v2.get(i) != 0 ){
+                     validation = false;
+                 }
+            }
+            if (resultat >= 0){
+                validation = false;
+            }
+        }
+        return validation;
     }
 
     /**
@@ -295,7 +323,40 @@ public class VecteurCreux implements Iterable<Double> {
      * est diff�rent.
      */
     public boolean estParallelA(VecteurCreux v2) throws IndexOutOfBoundsException {
-        return false;
+        double resultat = 0;
+        boolean validation = false;
+        double divVecteur2 = 0;
+
+        if (this.taille() != v2.taille()){
+
+           throw new IndexOutOfBoundsException();
+
+        }else {
+            validation = true;
+            for (int i = 1 ; i <= this.taille() ; i++){
+
+                 if ( this.get(i) != 0 && v2.get(i) != 0 ) {
+                     divVecteur2 = this.get(i) / v2.get(i);
+                     if (resultat == 0) {
+                         resultat = divVecteur2;
+                     } else {
+                         if (divVecteur2 != resultat){
+                             validation = false;
+                         }
+                     }
+                 }
+                 
+                 if (this.get(i) == 0 && v2.get(i) != 0 ){
+                     validation = false;
+                 }
+                 
+            }
+
+            if (resultat <= 0){
+                validation = false;
+            }
+        }
+        return validation;
     }
 
     /**
