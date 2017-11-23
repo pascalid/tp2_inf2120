@@ -188,6 +188,11 @@ public class VecteurCreux implements Iterable<Double> {
 
     }
     
+    /**
+     * donne le nombre d'éléments qui ne sont pas égal a zero
+     *
+     * @return le nombre d'éléments quine sont pas égal a zero
+     */
     public int nbrElementNonZero(){
 
         int total = 0;
